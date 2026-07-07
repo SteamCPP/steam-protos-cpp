@@ -1,8 +1,7 @@
-syntax = "proto2";
 import "steamnetworkingsockets_messages_certs.proto";
 
 option optimize_for = SPEED;
-option py_generic_services = false;
+option cc_generic_services = false;
 
 message CMsgSteamDatagramRelayAuthTicket {
 	message ExtraField {

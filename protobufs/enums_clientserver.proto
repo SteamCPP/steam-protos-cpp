@@ -1,6 +1,5 @@
-syntax = "proto2";
 option optimize_for = SPEED;
-option py_generic_services = false;
+option cc_generic_services = false;
 
 enum EMsg {
 	option allow_alias = true;
@@ -69,6 +68,9 @@ enum EMsg {
 	k_EMsgUpdateScheduledTaskEnableStateResponse_TEST = 245;
 	k_EMsgContentDescriptionDeltaUpdate = 246;
 	k_EMsgGMShellAndServerAddressUpdates = 247;
+	k_EMsgGMDynamicRoutingUpdate = 248;
+	k_EMsgEnsureBillingConfigReload_TEST = 249;
+	k_EMsgEnsureBillingConfigReloadResponse_TEST = 250;
 	k_EMsgBaseGM = 300;
 	k_EMsgHeartbeat = 300;
 	k_EMsgShellFailed = 301;
@@ -96,6 +98,7 @@ enum EMsg {
 	k_EMsgGMStatsForwardToAdminConnections = 338;
 	k_EMsgGMGetModifiedConVars = 339;
 	k_EMsgGMGetModifiedConVarsResponse = 340;
+	k_EMsgGMNeedShellAndServerAddresses = 341;
 	k_EMsgBaseAIS = 400;
 	k_EMsgAISRequestContentDescription = 402;
 	k_EMsgAISGetPackageChangeNumber = 405;
@@ -104,11 +107,11 @@ enum EMsg {
 	k_EMsgAIGetAppGCFlagsResponse = 424;
 	k_EMsgAIGetAppList = 425;
 	k_EMsgAIGetAppListResponse = 426;
-	k_EMsgAISGetCouponDefinition = 429;
-	k_EMsgAISGetCouponDefinitionResponse = 430;
 	k_EMsgAISUpdateSubordinateContentDescription = 431;
 	k_EMsgAISUpdateSubordinateContentDescriptionResponse = 432;
-	k_EMsgAISTestEnableGC = 433;
+	k_EMsgAISBroadcastSubordinateContentDescription = 434;
+	k_EMsgProductInfoChangedNotification = 435;
+	k_EMsgProductInfoCacheStatus = 436;
 	k_EMsgBaseAM = 500;
 	k_EMsgAMUpdateUserBanRequest = 504;
 	k_EMsgAMAddLicense = 505;
@@ -224,18 +227,14 @@ enum EMsg {
 	k_EMsgClientRemoveFriend = 714;
 	k_EMsgClientGamesPlayedNoDataBlob = 715;
 	k_EMsgClientChangeStatus = 716;
-	k_EMsgClientVacStatusResponse = 717;
 	k_EMsgClientFriendMsg = 718;
 	k_EMsgClientGameConnect_obsolete = 719;
 	k_EMsgClientGamesPlayed2_obsolete = 720;
 	k_EMsgClientGameEnded_obsolete = 721;
 	k_EMsgClientSystemIM = 726;
 	k_EMsgClientSystemIMAck = 727;
-	k_EMsgClientGetLicenses = 728;
 	k_EMsgClientGetLegacyGameKey = 730;
 	k_EMsgClientContentServerLogOn_Deprecated = 731;
-	k_EMsgClientAckVACBan2 = 732;
-	k_EMsgClientGetPurchaseReceipts = 736;
 	k_EMsgClientGamesPlayed3_obsolete = 738;
 	k_EMsgClientAckGuestPass = 740;
 	k_EMsgClientRedeemGuestPass = 741;
@@ -243,7 +242,6 @@ enum EMsg {
 	k_EMsgClientRegisterKey = 743;
 	k_EMsgClientInviteUserToClan = 744;
 	k_EMsgClientAcknowledgeClanInvite = 745;
-	k_EMsgClientPurchaseWithMachineID = 746;
 	k_EMsgClientAppUsageEvent = 747;
 	k_EMsgClientLogOnResponse = 751;
 	k_EMsgClientSetHeartbeatRate = 755;
@@ -264,7 +262,6 @@ enum EMsg {
 	k_EMsgClientGameConnectTokens = 779;
 	k_EMsgClientLicenseList = 780;
 	k_EMsgClientVACBanStatus = 782;
-	k_EMsgClientEncryptPct = 784;
 	k_EMsgClientGetLegacyGameKeyResponse = 785;
 	k_EMsgClientAddFriend = 791;
 	k_EMsgClientAddFriendResponse = 792;
@@ -316,8 +313,6 @@ enum EMsg {
 	k_EMsgGSStatusUpdate_Unused = 907;
 	k_EMsgGSServerType = 908;
 	k_EMsgGSPlayerList = 909;
-	k_EMsgGSGetUserAchievementStatus = 910;
-	k_EMsgGSGetUserAchievementStatusResponse = 911;
 	k_EMsgGSGetPlayStats = 918;
 	k_EMsgGSGetPlayStatsResponse = 919;
 	k_EMsgGSGetUserGroupStatus = 920;
@@ -504,6 +499,7 @@ enum EMsg {
 	k_EMsgCMSetSecrets = 1704;
 	k_EMsgCMGetSecrets = 1705;
 	k_EMsgCMRemotePlayReplyPacket = 1706;
+	k_EMsgCMRemotePlayOffline = 1707;
 	k_EMsgBaseGC = 2200;
 	k_EMsgGCCmdRevive = 2203;
 	k_EMsgGCCmdDown = 2206;
@@ -550,7 +546,6 @@ enum EMsg {
 	k_EMsgSMExpensiveReport = 2902;
 	k_EMsgSMHourlyReport = 2903;
 	k_EMsgSMPartitionRenames = 2905;
-	k_EMsgSMMonitorSpace = 2906;
 	k_EMsgSMTestNextBuildSchemaConversion = 2907;
 	k_EMsgSMTestNextBuildSchemaConversionResponse = 2908;
 	k_EMsgBaseTest = 3000;
@@ -667,7 +662,6 @@ enum EMsg {
 	k_EMsgAMGetCommunityPrivacyState = 4116;
 	k_EMsgAMGetCommunityPrivacyStateResponse = 4117;
 	k_EMsgAMCheckClanInviteRateLimiting = 4118;
-	k_EMsgUGSGetUserAchievementStatus = 4119;
 	k_EMsgAMGetIgnored = 4120;
 	k_EMsgAMGetIgnoredResponse = 4121;
 	k_EMsgAMSetIgnoredResponse = 4122;
@@ -692,7 +686,6 @@ enum EMsg {
 	k_EMsgAMCheckClanMembershipResponse = 4161;
 	k_EMsgAMProbeClanMembershipList = 4162;
 	k_EMsgAMProbeClanMembershipListResponse = 4163;
-	k_EMsgUGSGetUserAchievementStatusResponse = 4164;
 	k_EMsgAMGetFriendsLobbies = 4165;
 	k_EMsgAMGetFriendsLobbiesResponse = 4166;
 	k_EMsgAMGetUserFriendNewsResponse = 4172;
@@ -869,6 +862,8 @@ enum EMsg {
 	k_EMsgAMECommPayPayment = 4423;
 	k_EMsgAMECommPayPaymentResponse = 4424;
 	k_EMsgAMSetRemoteClientID = 4425;
+	k_EMsgAMNuveiPayment = 4426;
+	k_EMsgAMNuveiPaymentResponse = 4427;
 	k_EMsgBasePSRange = 5000;
 	k_EMsgPSIsValidShoppingCart = 5003;
 	k_EMsgPSIsValidShoppingCartResponse = 5004;
@@ -944,8 +939,6 @@ enum EMsg {
 	k_EMsgClientEnableTestLicenseResponse = 5444;
 	k_EMsgClientDisableTestLicense = 5445;
 	k_EMsgClientDisableTestLicenseResponse = 5446;
-	k_EMsgClientRequestValidationMail = 5448;
-	k_EMsgClientRequestValidationMailResponse = 5449;
 	k_EMsgClientCheckAppBetaPassword = 5450;
 	k_EMsgClientCheckAppBetaPasswordResponse = 5451;
 	k_EMsgClientToGC = 5452;
@@ -1010,10 +1003,6 @@ enum EMsg {
 	k_EMsgClientAMGetClanOfficersResponse = 5532;
 	k_EMsgClientFriendProfileInfo = 5535;
 	k_EMsgClientFriendProfileInfoResponse = 5536;
-	k_EMsgClientUpdateMachineAuth = 5537;
-	k_EMsgClientUpdateMachineAuthResponse = 5538;
-	k_EMsgClientReadMachineAuth = 5539;
-	k_EMsgClientReadMachineAuthResponse = 5540;
 	k_EMsgClientScreenshotsChanged = 5543;
 	k_EMsgClientLaunchClientApp = 5544;
 	k_EMsgClientLaunchClientAppResponse = 5545;
@@ -1113,16 +1102,6 @@ enum EMsg {
 	k_EMsgAMGMSGameServerUpdate = 6405;
 	k_EMsgAMGMSGameServerRemove = 6406;
 	k_EMsgGameServerOutOfDate = 6407;
-	k_EMsgDeviceAuthorizationBase = 6500;
-	k_EMsgClientAuthorizeLocalDeviceRequest = 6501;
-	k_EMsgClientAuthorizeLocalDeviceResponse = 6502;
-	k_EMsgClientDeauthorizeDeviceRequest = 6503;
-	k_EMsgClientDeauthorizeDevice = 6504;
-	k_EMsgClientUseLocalDeviceAuthorizations = 6505;
-	k_EMsgClientGetAuthorizedDevices = 6506;
-	k_EMsgClientGetAuthorizedDevicesResponse = 6507;
-	k_EMsgAMNotifySessionDeviceAuthorized = 6508;
-	k_EMsgClientAuthorizeLocalDeviceNotification = 6509;
 	k_EMsgMMSBase = 6600;
 	k_EMsgClientMMSCreateLobby = 6601;
 	k_EMsgClientMMSCreateLobbyResponse = 6602;
@@ -1153,6 +1132,8 @@ enum EMsg {
 	k_EMsgClientMMSGetLobbyStatusResponse = 6627;
 	k_EMsgMMSGetLobbyList = 6628;
 	k_EMsgMMSGetLobbyListResponse = 6629;
+	k_EMsgMMSRoutingOverride = 6630;
+	k_EMsgGameServerPolicyUpdate = 6631;
 	k_EMsgNonStdMsgBase = 6800;
 	k_EMsgNonStdMsgMemcached = 6801;
 	k_EMsgNonStdMsgHTTPServer = 6802;
@@ -1164,7 +1145,6 @@ enum EMsg {
 	k_EMsgNonStdMsgTests = 6808;
 	k_EMsgNonStdMsgUMQpipeAAPL = 6809;
 	k_EMSgNonStdMsgSyslog = 6810;
-	k_EMsgNonStdMsgLogsink = 6811;
 	k_EMsgNonStdMsgSteam2Emulator = 6812;
 	k_EMsgNonStdMsgRTMPServer = 6813;
 	k_EMsgNonStdMsgWebSocket = 6814;
@@ -1281,8 +1261,8 @@ enum EMsg {
 	k_EMsgRMDeleteMemcachedKeys = 7803;
 	k_EMsgRMRemoteInvoke = 7804;
 	k_EMsgBadLoginIPList = 7805;
-	k_EMsgRMMsgTraceAddTrigger = 7806;
-	k_EMsgRMMsgTraceRemoveTrigger = 7807;
+	k_EMsgRMMsgTraceAddOrUpdateTrigger = 7806;
+	k_EMsgRMMsgTraceRemoveTriggers = 7807;
 	k_EMsgRMMsgTraceEvent = 7808;
 	k_EMsgUGSBase = 7900;
 	k_EMsgUGSUpdateGlobalStats = 7900;
@@ -1314,8 +1294,6 @@ enum EMsg {
 	k_EMsgBoxMonitorBase = 8700;
 	k_EMsgBoxMonitorReportRequest = 8700;
 	k_EMsgBoxMonitorReportResponse = 8701;
-	k_EMsgLogsinkBase = 8800;
-	k_EMsgLogsinkWriteReport = 8800;
 	k_EMsgPICSBase = 8900;
 	k_EMsgClientPICSChangesSinceRequest = 8901;
 	k_EMsgClientPICSChangesSinceResponse = 8902;
@@ -1373,12 +1351,7 @@ enum EMsg {
 	k_EMsgClientGetEmoticonList = 9330;
 	k_EMsgClientEmoticonList = 9331;
 	k_EMsgSLCBase = 9400;
-	k_EMsgSLCUserSessionStatus = 9400;
-	k_EMsgSLCRequestUserSessionStatus = 9401;
-	k_EMsgSLCSharedLicensesLockStatus = 9402;
-	k_EMsgClientSharedLibraryLockStatus = 9405;
 	k_EMsgClientSharedLibraryStopPlaying = 9406;
-	k_EMsgSLCSharedLibraryChanged = 9408;
 	k_EMsgRemoteClientBase = 9500;
 	k_EMsgRemoteClientAuth_OBSOLETE = 9500;
 	k_EMsgRemoteClientAuthResponse_OBSOLETE = 9501;
@@ -1403,6 +1376,22 @@ enum EMsg {
 	k_EMsgRemoteClientAuthorizationConfirmed = 9520;
 	k_EMsgRemoteClientProofRequest = 9521;
 	k_EMsgRemoteClientProofResponse = 9522;
+	k_EMsgRemoteClientWifiAPStatus = 9523;
+	k_EMsgRemoteClientPairWifiAP = 9524;
+	k_EMsgRemoteClientPairWifiAPResponse = 9525;
+	k_EMsgRemoteClientDownloadScheduleChanged = 9526;
+	k_EMsgRemoteClientDownloadItemScheduleChanged = 9527;
+	k_EMsgRemoteClientAppUpdateStopped = 9528;
+	k_EMsgRemoteClientAppDownloadStats = 9529;
+	k_EMsgRemoteClientAppUploadStats = 9530;
+	k_EMsgRemoteClientAppInfoUpdateComplete = 9531;
+	k_eMsgRemoteClientDownloadsManagement = 9532;
+	k_eMsgRemoteClientDownloadingAppID = 9533;
+	k_eMsgRemoteClientPeerContentServerChanged = 9534;
+	k_eMsgRemoteClientRestrictAutoUpdatesChanged = 9535;
+	k_eMsgRemoteClientSuspendLanPeerContent = 9536;
+	k_eMsgRemoteClientUpdateDownloadsController = 9537;
+	k_EMsgRemoteClientAcceptAllEULAs = 9538;
 	k_EMsgClientConcurrentSessionsBase = 9600;
 	k_EMsgClientPlayingSessionState = 9600;
 	k_EMsgClientKickPlayingSession = 9601;
@@ -1463,7 +1452,6 @@ enum EClientPersonaStateFlag {
 	k_EClientPersonaStateGameExtraInfo = 256;
 	k_EClientPersonaStateGameDataBlob = 512;
 	k_EClientPersonaStateFlagClanData = 1024;
-	k_EClientPersonaStateFlagFacebook = 2048;
 	k_EClientPersonaStateFlagRichPresence = 4096;
 	k_EClientPersonaStateFlagBroadcast = 8192;
 	k_EClientPersonaStateFlagWatching = 16384;
@@ -1495,7 +1483,7 @@ enum ECodecUsagePlatform {
 	k_ECodecUsagePlatformWindows = 1;
 	k_ECodecUsagePlatformMacOS = 2;
 	k_ECodecUsagePlatformLinux = 3;
-	k_ECodecUsagePlatformSteamDeck = 4;
+	k_ECodecUsagePlatformSteamHardware = 4;
 }
 
 enum ECodecUsageReason {

@@ -1,10 +1,9 @@
-syntax = "proto2";
 import "enums.proto";
 import "steammessages_base.proto";
 import "google/protobuf/descriptor.proto";
 
 option optimize_for = SPEED;
-option py_generic_services = true;
+option cc_generic_services = true;
 
 extend .google.protobuf.ServiceOptions {
 	optional .EClientExecutionSite webui_service_execution_site = 70000 [default = k_EClientExecutionSiteSteamUI];

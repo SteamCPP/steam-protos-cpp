@@ -1,9 +1,8 @@
-syntax = "proto2";
 import "steamnetworkingsockets_messages.proto";
 import "steamdatagram_messages_sdr.proto";
 
 option optimize_for = SPEED;
-option py_generic_services = true;
+option cc_generic_services = true;
 
 message CGameNetworkingUI_GlobalState {
 }

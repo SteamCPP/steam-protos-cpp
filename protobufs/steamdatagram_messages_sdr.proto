@@ -1,9 +1,8 @@
-syntax = "proto2";
 import "steamnetworkingsockets_messages_certs.proto";
 import "steamnetworkingsockets_messages.proto";
 
 option optimize_for = SPEED;
-option py_generic_services = false;
+option cc_generic_services = false;
 
 enum ESteamDatagramMsgID {
 	k_ESteamDatagramMsg_Invalid = 0;

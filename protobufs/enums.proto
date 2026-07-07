@@ -1,9 +1,4 @@
-syntax = "proto2";
-import "steammessages_base.proto";
-
 option optimize_for = SPEED;
-option py_generic_services = true;
-option (force_php_generation) = true;
 
 enum EPublishedFileQueryType {
 	k_PublishedFileQueryType_RankedByVote = 0;
@@ -28,6 +23,8 @@ enum EPublishedFileQueryType {
 	k_PublishedFileQueryType_RankedByInappropriateContentRating = 19;
 	k_PublishedFileQueryType_RankedByBanContentCheck = 20;
 	k_PublishedFileQueryType_RankedByLastUpdatedDate = 21;
+	k_PublishedFileQueryType_RankedByNumParentItems = 22;
+	k_PublishedFileQueryType_RankedByNumParentCollections = 23;
 }
 
 enum EPublishedFileInappropriateProvider {
@@ -134,13 +131,6 @@ enum ESystemFanControlMode {
 	k_SystemFanControlMode_Default = 2;
 }
 
-enum EStartupMovieVariant {
-	k_EStartupMovieVariant_Invalid = 0;
-	k_EStartupMovieVariant_Generic = 1;
-	k_EStartupMovieVariant_DeckBlue = 2;
-	k_EStartupMovieVariant_DeckOrange = 3;
-}
-
 enum EColorGamutLabelSet {
 	k_ColorGamutLabelSet_Default = 0;
 	k_ColorGamutLabelSet_sRGB_Native = 1;
@@ -166,6 +156,14 @@ enum EBluetoothDeviceType {
 	k_BluetoothDeviceType_Joystick = 9;
 	k_BluetoothDeviceType_Gamepad = 10;
 	k_BluetoothDeviceType_Keyboard = 11;
+}
+
+enum ESpeakerConfiguration {
+	k_ESpeakerConfiguration_Other = 0;
+	k_ESpeakerConfiguration_Stereo = 1;
+	k_ESpeakerConfiguration_51 = 2;
+	k_ESpeakerConfiguration_71 = 3;
+	k_ESpeakerConfiguration_51_Ac3 = 4;
 }
 
 enum ESystemAudioDirection {
@@ -224,21 +222,12 @@ enum EGPUPerformanceLevel {
 	k_EGPUPerformanceLevel_Profiling = 5;
 }
 
-enum EScalingFilter {
-	k_EScalingFilter_Invalid = 0;
-	k_EScalingFilter_FSR = 1;
-	k_EScalingFilter_Nearest = 2;
-	k_EScalingFilter_Integer = 3;
-	k_EScalingFilter_Linear = 4;
-	k_EScalingFilter_NIS = 5;
-}
-
 enum ESplitScalingFilter {
 	k_ESplitScalingFilter_Invalid = 0;
 	k_ESplitScalingFilter_Linear = 1;
 	k_ESplitScalingFilter_Nearest = 2;
-	k_ESplitScalingFilter_FSR = 3;
-	k_ESplitScalingFilter_NIS = 4;
+	k_ESplitScalingFilter_Sharp = 3;
+	k_ESplitScalingFilter_NIS_Deprecated = 4;
 }
 
 enum ESplitScalingScaler {
@@ -263,6 +252,7 @@ enum ESLSHelper {
 	k_ESLSHelper_Journal = 3;
 	k_ESLSHelper_Gpu = 4;
 	k_ESLSHelper_SystemInfo = 5;
+	k_ESLSHelper_Devcoredump = 6;
 }
 
 enum EHDRVisualization {
@@ -335,6 +325,19 @@ enum ESystemDisplayCompatibilityMode {
 	k_ESystemDisplayCompatibilityMode_Invalid = 0;
 	k_ESystemDisplayCompatibilityMode_None = 1;
 	k_ESystemDisplayCompatibilityMode_MinimalBandwith = 2;
+}
+
+enum ESteamOSCompatibilityCategory {
+	k_ESteamOSCompatibilityCategory_Unknown = 0;
+	k_ESteamOSCompatibilityCategory_Unsupported = 1;
+	k_ESteamOSCompatibilityCategory_Compatible = 2;
+}
+
+enum ESteamOSCompatibilityResultDisplayType {
+	k_ESteamOSCompatibilityResultDisplayType_Invisible = 0;
+	k_ESteamOSCompatibilityResultDisplayType_Informational = 1;
+	k_ESteamOSCompatibilityResultDisplayType_Unsupported = 2;
+	k_ESteamOSCompatibilityResultDisplayType_Compatible = 3;
 }
 
 enum ESteamDeckCompatibilityCategory {
@@ -473,6 +476,22 @@ enum EProvideDeckFeedbackPreference {
 	k_EProvideDeckFeedbackPreference_No = 2;
 }
 
+enum EHardwareCompatibilityFeedbackDetails {
+	k_EHardwareCompatibilityFeedbackDetails_Unset = 0;
+	k_EHardwareCompatibilityFeedbackDetails_Performance = 1;
+	k_EHardwareCompatibilityFeedbackDetails_Stability = 2;
+	k_EHardwareCompatibilityFeedbackDetails_Legibility = 4;
+	k_EHardwareCompatibilityFeedbackDetails_Input = 8;
+	k_EHardwareCompatibilityFeedbackDetails_Other = 16;
+}
+
+enum EGameFrameRateReportingPreference {
+	k_EGameFrameRateReportingPreference_Unset = 0;
+	k_EGameFrameRateReportingPreference_No = 1;
+	k_EGameFrameRateReportingPreference_Yes_Anonymous = 2;
+	k_EGameFrameRateReportingPreference_Yes_NonAnonymous = 3;
+}
+
 enum ETouchGesture {
 	k_ETouchGestureNone = 0;
 	k_ETouchGestureTouch = 1;
@@ -566,6 +585,8 @@ enum ECompromiseDetectionType {
 	k_ECompromiseDetectionType_Manual = 3;
 	k_ECompromiseDetectionType_TicketAction = 4;
 	k_ECompromiseDetectionType_MaliciousRefund = 5;
+	k_ECompromiseDetectionType_Move2FA = 6;
+	k_ECompromiseDetectionType_DeviceType = 7;
 }
 
 enum EAsyncGameSessionUserState {
@@ -587,6 +608,12 @@ enum EGameRecordingType {
 	k_EGameRecordingType_ManualRecording = 2;
 	k_EGameRecordingType_BackgroundRecording = 3;
 	k_EGameRecordingType_Clip = 4;
+}
+
+enum EGRMode {
+	k_EGRMode_Never = 0;
+	k_EGRMode_Always = 1;
+	k_EGRMode_Manual = 2;
 }
 
 enum EExportCodec {
@@ -616,6 +643,17 @@ enum EProtoAppType {
 	k_EAppTypeBeta = 65536;
 	k_EAppTypeShortcut = 1073741824;
 	k_EAppTypeDepotOnly = -2147483648;
+}
+
+enum EAppTestType {
+	k_EAppTestType_BuildReview = 0;
+	k_EAppTestType_StorePageReview = 1;
+	k_EAppTestType_SteamChina_BuildReview = 2;
+	k_EAppTestType_SteamChina_StorePageReview = 3;
+	k_EAppTestType_SteamChinaPlatformOperator_StorePageReview = 4;
+	k_EAppTestType_SteamChinaPlatformOperator_BuildReview = 5;
+	k_EAppTestType_SteamDeckCompatibilityReview = 6;
+	k_EAppTestType_SteamFrameCompatibilityReview = 7;
 }
 
 enum EChildProcessQueryCommand {
@@ -654,4 +692,209 @@ enum EExternalSaleEventType {
 	k_EExternalSaleEventType_Region = 3;
 	k_EExternalSaleEventType_Theme = 4;
 	k_EExternalSaleEventType_Franchise = 5;
+}
+
+enum EEnhancedMarketAppearanceStatus {
+	k_EnhancedMarketAppearanceStatus_None = 0;
+	k_EnhancedMarketAppearanceStatus_Pending = 1;
+	k_EnhancedMarketAppearanceStatus_InProgress = 2;
+	k_EnhancedMarketAppearanceStatus_Completed = 3;
+}
+
+enum EContentReportSubjectType {
+	k_EContentReportSubjectType_Invalid = 0;
+	k_EContentReportSubjectType_ForumPost = 1;
+	k_EContentReportSubjectType_CommentThread = 2;
+	k_EContentReportSubjectType_UGCFile = 3;
+	k_EContentReportSubjectType_FriendChatMsg = 4;
+	k_EContentReportSubjectType_ChatRoomMsg = 5;
+	k_EContentReportSubjectType_ChatGroup = 6;
+	k_EContentReportSubjectType_MAX = 7;
+}
+
+enum EControlledLegalCategoryStatus {
+	k_EControlledLegalCategoryStatus_None = 0;
+	k_EControlledLegalCategoryStatus_Accused = 1;
+	k_EControlledLegalCategoryStatus_Convicted = 2;
+	k_EControlledLegalCategoryStatus_Acquitted = 3;
+}
+
+enum EContentModeratorLevel {
+	k_EContentModeratorLevel_Any = 0;
+	k_EContentModeratorLevel_Supervisor = 1;
+	k_EContentModeratorLevel_Valve = 10;
+	k_EContentModeratorLevel_MAX = 11;
+}
+
+enum EContentReportResolution {
+	k_EContentReportResolution_Unresolved = 0;
+	k_EContentReportResolution_Acquitted = 1;
+	k_EContentReportResolution_Removed = 2;
+	k_EContentReportResolution_Relabelled = 3;
+	k_EContentReportResolution_Suspicious = 4;
+	k_EContentReportResolution_HarassmentStrike = 5;
+	k_EContentReportResolution_Purged = 6;
+	k_EContentReportResolution_DisconnectedFromApp = 7;
+	k_EContentReportResolution_SuspiciousIncludingUpvoters = 8;
+	k_EContentReportResolution_VisibilityChanged = 9;
+	k_EContentReportResolution_CountryRestrictionsChanged = 10;
+	k_EContentReportResolution_RemoveAndWarn = 11;
+	k_EContentReportResolution_RemoveAndBan = 12;
+	k_EContentReportResolution_RemoveAndKick = 13;
+	k_EContentReportResolution_Sanctioned = 14;
+	k_EContentReportResolution_Sustained = 15;
+	k_EContentReportResolution_Broken = 16;
+	k_EContentReportResolution_MAX = 17;
+}
+
+enum EContentModerationSanction {
+	k_EContentModerationSanction_Invalid = 0;
+	k_EContentModerationSanction_Deleted = 1;
+	k_EContentModerationSanction_CommunityBanned = 2;
+	k_EContentModerationSanction_HubBanned = 3;
+	k_EContentModerationSanction_TradeBanned = 4;
+	k_EContentModerationSanction_CommentHistoryDeleted = 5;
+	k_EContentModerationSanction_Relabelled = 6;
+	k_EContentModerationSanction_MarkAsSuspicious = 7;
+	k_EContentModerationSanction_Warned = 8;
+	k_EContentModerationSanction_KickedFromGroup = 9;
+	k_EContentModerationSanction_HarassmentBanned = 10;
+	k_EContentModerationSanction_MAX = 11;
+}
+
+enum EContentReportSubjectAction {
+	k_EContentReportSubjectAction_Invalid = 0;
+	k_EContentReportSubjectAction_Unresolved = 1;
+	k_EContentReportSubjectAction_Sanctioned = 2;
+	k_EContentReportSubjectAction_Acquitted = 3;
+	k_EContentReportSubjectAction_Cancelled = 4;
+	k_EContentReportSubjectAction_Updated = 5;
+	k_EContentReportSubjectAction_Escalated = 6;
+	k_EContentReportSubjectAction_Disputed = 7;
+	k_EContentReportSubjectAction_Sustained = 8;
+	k_EContentReportSubjectAction_Locked = 9;
+	k_EContentReportSubjectAction_Unlocked = 10;
+	k_EContentReportSubjectAction_Deleted = 11;
+	k_EContentReportSubjectAction_Warned = 12;
+	k_EContentReportSubjectAction_BannedFromHub = 13;
+	k_EContentReportSubjectAction_BannedFromCommunity = 14;
+	k_EContentReportSubjectAction_TradeBanned = 15;
+	k_EContentReportSubjectAction_MarkedAsSuspicious = 16;
+	k_EContentReportSubjectAction_ResetContent = 17;
+	k_EContentReportSubjectAction_EscalatedForCSAM = 18;
+	k_EContentReportSubjectAction_EscalatedForTerrorism = 19;
+	k_EContentReportSubjectAction_Claimed = 20;
+	k_EContentReportSubjectAction_Released = 21;
+	k_EContentReportSubjectAction_PrivateMessaged = 22;
+	k_EContentReportSubjectAction_OwnerDisputed = 23;
+}
+
+enum EContentReportReason {
+	k_EContentReportReason_Invalid = 0;
+	k_EContentReportReason_None = 1;
+	k_EContentReportReason_Unknown = 2;
+	k_EContentReportReason_Harassment = 3;
+	k_EContentReportReason_BullyingAndIntimidation = 4;
+	k_EContentReportReason_Stalking = 5;
+	k_EContentReportReason_Doxxing = 6;
+	k_EContentReportReason_OtherHarassment = 7;
+	k_EContentReportReason_EncouragingViolence = 8;
+	k_EContentReportReason_EncouragingSelfHarm = 9;
+	k_EContentReportReason_EncouragingSuicide = 10;
+	k_EContentReportReason_OtherViolenceOrSelfHarm = 11;
+	k_EContentReportReason_PhishingOrAccountTheft = 12;
+	k_EContentReportReason_AttemptedScamming = 13;
+	k_EContentReportReason_LinkingToMaliciousContent = 14;
+	k_EContentReportReason_Impersonation = 15;
+	k_EContentReportReason_OtherScamsAndTheft = 16;
+	k_EContentReportReason_EncouragingTerrorism = 17;
+	k_EContentReportReason_OrganizingTerrorism = 18;
+	k_EContentReportReason_OtherTerrorism = 19;
+	k_EContentReportReason_TargetedAbuse = 20;
+	k_EContentReportReason_NamingAndShaming = 21;
+	k_EContentReportReason_Discrimination = 22;
+	k_EContentReportReason_OtherAbuse = 23;
+	k_EContentReportReason_Trolling = 24;
+	k_EContentReportReason_Baiting = 25;
+	k_EContentReportReason_Derailing = 26;
+	k_EContentReportReason_OtherDisruptive = 27;
+	k_EContentReportReason_Spam = 28;
+	k_EContentReportReason_Begging = 29;
+	k_EContentReportReason_Reposting = 30;
+	k_EContentReportReason_OtherOffTopic = 31;
+	k_EContentReportReason_CSAMSexualContent = 32;
+	k_EContentReportReason_CSAMGroomingOrEnticement = 33;
+	k_EContentReportReason_CSAMOther = 34;
+	k_EContentReportReason_NudityOrSexualContent = 35;
+	k_EContentReportReason_NonConsensualMaterial = 36;
+	k_EContentReportReason_Advertising = 37;
+	k_EContentReportReason_ReferralLinks = 38;
+	k_EContentReportReason_Gambling = 39;
+	k_EContentReportReason_Raffles = 40;
+	k_EContentReportReason_OtherCommercialActivity = 41;
+	k_EContentReportReason_InauthenticReview = 42;
+	k_EContentReportReason_HiddenAdvertisementOrCommercialCommunication = 43;
+	k_EContentReportReason_MisleadingInformationAboutGoodsOrServices = 44;
+	k_EContentReportReason_MisleadingInformationAboutConsumerRights = 45;
+	k_EContentReportReason_NoncomplianceWithPricingRegulations = 46;
+	k_EContentReportReason_RightToBeForgottenViolation = 47;
+	k_EContentReportReason_MissingProcessingGroundForData = 48;
+	k_EContentReportReason_OtherDataProtectionAndPrivacyViolation = 49;
+	k_EContentReportReason_GenderedHarassment = 50;
+	k_EContentReportReason_GenderedBullyingAndIntimidation = 51;
+	k_EContentReportReason_GenderedStalking = 52;
+	k_EContentReportReason_GenderedDoxxing = 53;
+	k_EContentReportReason_GenderedOtherHarassment = 54;
+	k_EContentReportReason_GenderedEncouragingViolence = 55;
+	k_EContentReportReason_GenderedTargetedAbuse = 56;
+	k_EContentReportReason_CSAMFakedSexualContent = 57;
+	k_EContentReportReason_GenderedNonConsensualMaterial = 58;
+	k_EContentReportReason_FakedGenderedNonConsensualMaterial = 59;
+	k_EContentReportReason_FakedNonConsensualMaterial = 60;
+	k_EContentReportReason_NegativeEffectonDiscourseOrElections = 61;
+	k_EContentReportReason_QuotesModeratedContent = 62;
+	k_EContentReportReason_CredibleThreatOfViolence = 63;
+	k_EContentReportReason_AutoCreatedOnModeration = 64;
+	k_EContentReportReason_MAX = 65;
+}
+
+enum EResolutionAutomation {
+	k_EResolutionAutomation_Manual = 0;
+	k_EResolutionAutomation_PartiallyAutomated = 1;
+	k_EResolutionAutomation_FullyAutomated = 2;
+	k_EResolutionAutomation_MAX = 3;
+}
+
+enum EPressOutletAction {
+	k_EPressOutletAction_Invalid = 0;
+	k_EPressOutletAction_Granted = 1;
+	k_EPressOutletAction_Removed = 2;
+	k_EPressOutletAction_Created = 3;
+	k_EPressOutletAction_Updated = 4;
+	k_EPressOutletAction_Deleted = 5;
+	k_EPressOutletAction_Undeleted = 6;
+	k_EPressOutletAction_StagedAdd = 7;
+	k_EPressOutletAction_StagedDelete = 8;
+	k_EPressOutletAction_EnterStaging = 9;
+	k_EPressOutletAction_ExitStaging = 10;
+	k_EPressOutletAction_ReverseStagedAdd = 11;
+	k_EPressOutletAction_ReverseStagedDelete = 12;
+	k_EPressOutletAction_MAX = 13;
+}
+
+enum EPressOutletMemberPendingState {
+	k_EPressOutletMemberPendingState_Member = 0;
+	k_EPressOutletMemberPendingState_StagedDelete = 1;
+	k_EPressOutletMemberPendingState_StagedAdd = 2;
+	k_EPressOutletMemberPendingState_MAX = 3;
+}
+
+enum ECommentDeleteReason {
+	k_ECommentDeleteReason_Invalid = 0;
+	k_ECommentDeleteReason_User = 1;
+	k_ECommentDeleteReason_ThreadOwner = 2;
+	k_ECommentDeleteReason_Moderator = 3;
+	k_ECommentDeleteReason_Support = 4;
+	k_ECommentDeleteReason_Spam = 5;
+	k_ECommentDeleteReason_AccountDeletion = 6;
 }

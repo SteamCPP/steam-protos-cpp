@@ -1,6 +1,5 @@
-syntax = "proto2";
 option optimize_for = SPEED;
-option py_generic_services = false;
+option cc_generic_services = false;
 
 message CClientMetrics_ClientBootstrap_RequestInfo {
 	optional string original_hostname = 1;

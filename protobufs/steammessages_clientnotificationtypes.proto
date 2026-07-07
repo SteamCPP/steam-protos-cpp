@@ -1,6 +1,5 @@
-syntax = "proto2";
 option optimize_for = SPEED;
-option py_generic_services = true;
+option cc_generic_services = true;
 
 enum EClientNotificationType {
 	k_EClientNotificationType_Invalid = 0;
@@ -14,9 +13,7 @@ enum EClientNotificationType {
 	k_EClientNotificationType_FriendMessage = 8;
 	k_EClientNotificationType_GroupChatMessage = 9;
 	k_EClientNotificationType_FriendInviteRollup = 10;
-	k_EClientNotificationType_FamilySharingDeviceAuthorizationChanged = 11;
 	k_EClientNotificationType_FamilySharingStopPlaying = 12;
-	k_EClientNotificationType_FamilySharingLibraryAvailable = 13;
 	k_EClientNotificationType_Screenshot = 14;
 	k_EClientNotificationType_CloudSyncFailure = 15;
 	k_EClientNotificationType_CloudSyncConflict = 16;
@@ -62,6 +59,12 @@ enum EClientNotificationType {
 	k_EClientNotificationType_GameRecordingStop = 56;
 	k_EClientNotificationType_GameRecordingUserMarkerAdded = 57;
 	k_EClientNotificationType_GameRecordingInstantClip = 58;
+	k_EClientNotificationType_PlaytestInvite = 59;
+	k_EClientNotificationType_TradeReversal = 60;
+	k_EClientNotificationType_HardwareUpdateAvailable = 61;
+	k_EClientNotificationType_ControllerLowBattery = 62;
+	k_EClientNotificationType_ControllerConnected = 63;
+	k_EClientNotificationType_ControllerDisconnected = 64;
 }
 
 enum ESystemUpdateNotificationType {
@@ -249,7 +252,8 @@ message CClientNotificationRemoteClientStartStream {
 message CClientNotificationStreamingClientConnection {
 	optional string hostname = 1;
 	optional string machine = 2;
-	optional bool connected = 3;
+	optional uint32 guest_id = 3;
+	optional bool connected = 4;
 }
 
 message CClientNotificationPlaytimeWarning {
@@ -280,4 +284,22 @@ message CClientNotificationGameRecordingInstantClip {
 	optional fixed64 game_id = 1;
 	optional string clip_id = 2;
 	optional float duration_secs = 3;
+}
+
+message CClientNotificationHardwareUpdateAvailable {
+	repeated uint32 etype = 1;
+}
+
+message CClientNotificationControllerLowBattery {
+	optional uint32 controller_type = 1;
+	optional float pct_remaining = 2;
+}
+
+message CClientNotificationControllerConnected {
+	optional uint32 controller_index = 1;
+}
+
+message CClientNotificationControllerDisconnected {
+	optional uint32 controller_type = 1;
+	optional string controller_name = 2;
 }

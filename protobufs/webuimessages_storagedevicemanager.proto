@@ -1,10 +1,9 @@
-syntax = "proto2";
 import "enums.proto";
 import "steammessages_base.proto";
 import "webuimessages_base.proto";
 
 option optimize_for = SPEED;
-option py_generic_services = true;
+option cc_generic_services = true;
 
 message CStorageDeviceManager_IsServiceAvailable_Request {
 }
